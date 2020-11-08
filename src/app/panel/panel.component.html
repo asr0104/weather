@@ -1,0 +1,42 @@
+<div class="card panel">
+  <div class="card-body d-flex flex-column">
+    <p *ngIf="!isShow && !isData" class="clickHere" (click)="toggleDisplay()">
+      Click Here
+    </p>
+    <form
+      *ngIf="isShow"
+      [formGroup]="weatherSearchForm"
+      (ngSubmit)="sendToAPI(weatherSearchForm.value)"
+    >
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="text"
+          aria-describedby="weatherLocation"
+          placeholder="Please input a Location"
+          formControlName="location"
+        />
+      </div>
+      <div class="text-center">
+        <p *ngIf="error">Please enter valid location</p>
+        <button type="submit" class="btn btn-success btn-md">Search</button>
+      </div>
+    </form>
+    <div *ngIf="isData && !isShow">
+      <img
+        [src]="
+          'http://openweathermap.org/img/w/' +
+          weatherData?.weather[0].icon +
+          '.png'
+        "
+        style="width: 60px"
+      />
+      <div class="temp">{{ this.weatherData?.main.temp }}°C</div>
+      <div class="edit">
+        <button class="btn btn-success btn-md" (click)="toggleDisplay()">
+          Edit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
